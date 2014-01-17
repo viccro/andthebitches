@@ -83,7 +83,6 @@ DRIVERSRC = src/drivers/devices/fpga.c \
 			src/drivers/devices/mcp3008.c \
 			src/drivers/devices/nrf24l01.c \
 			src/drivers/devices/at45db011.c \
-#			src/drivers/lcd.c \
 			src/drivers/servo.c \
 			src/drivers/motor.c \
 			src/drivers/analog.c \
@@ -93,6 +92,7 @@ DRIVERSRC = src/drivers/devices/fpga.c \
 			src/drivers/gyro.c \
 			src/drivers/rf.c \
 
+#			src/drivers/lcd.c \
 # Kernel source files
 KERNELSRC = src/kern/main.c \
 			src/kern/lock.c \
