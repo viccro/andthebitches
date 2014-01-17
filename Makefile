@@ -1,5 +1,5 @@
 # User source files
-USERSRC = tests/frob_test.c
+USERSRC = user/robot/umain.c
 
 # Serial port
 AVRDUDE_USERPORT ?= /dev/ttyUSB0
