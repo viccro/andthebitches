@@ -1,0 +1,35 @@
+This is TeX, Version 3.1415926 (TeX Live 2009/Debian) (format=tex 2012.11.3)  9 JAN 2014 18:52
+**contest.tex
+(./contest.tex
+! Undefined control sequence.
+l.3 \chapter
+            {One Small Step}
+? 
+! Interruption.
+<to be read again> 
+                   {
+l.3 \chapter{
+             One Small Step}
+? 
+! Undefined control sequence.
+l.4 \begin
+          {minipage}[b]{4.25in}
+? 
+! Undefined control sequence.
+l.6 \begin
+          {slshape}
+? 
+! Undefined control sequence.
+l.7   {\large
+              \textsc{The year is 2067}}. After decades of inefficient,
+? 
+! Undefined control sequence.
+l.7   {\large \textsc
+                     {The year is 2067}}. After decades of inefficient,
+? 
+! Undefined control sequence.
+l.9 ...h for the benefit of the burgeoning \textsc
+                                                  {Terran Civilization},
+? 
+[1] )
+Output written on contest.dvi (1 page, 636 bytes).

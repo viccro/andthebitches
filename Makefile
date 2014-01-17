@@ -8,13 +8,6 @@ AVRDUDE_USERPORT ?= /dev/ttyUSB0
 PROGRAMMER = stk500v1
 
 
-
-
-
-
-
-
-
 ####################################################
 #   NOTHING NEEDS TO BE CHANGED BELOW THIS POINT   #
 ####################################################
@@ -90,7 +83,6 @@ DRIVERSRC = src/drivers/devices/fpga.c \
 			src/drivers/devices/mcp3008.c \
 			src/drivers/devices/nrf24l01.c \
 			src/drivers/devices/at45db011.c \
-			src/drivers/lcd.c \
 			src/drivers/servo.c \
 			src/drivers/motor.c \
 			src/drivers/analog.c \
@@ -100,6 +92,7 @@ DRIVERSRC = src/drivers/devices/fpga.c \
 			src/drivers/gyro.c \
 			src/drivers/rf.c \
 
+#			src/drivers/lcd.c \
 # Kernel source files
 KERNELSRC = src/kern/main.c \
 			src/kern/lock.c \
@@ -153,8 +146,8 @@ DISTOBJ = $(DISTSRC:.c=.o)
 all: $(OSLIB) $(HLLIB) $(BOOTTARGET) size docs
 
 size: $(OSELF)
-	@echo -n "-- OS Size "
-	@tools/avr-mem.sh $(OSELF) $(MCU)
+	echo -n "-- OS Size "
+	tools/avr-mem.sh $(OSELF) $(MCU)
 
 program: $(OSTARGET)
 	$(AVRDUDE) $(AVRDUDEFLAGS_USER) -U flash:w:$(OSTARGET)
@@ -177,64 +170,64 @@ programterm:
 	$(AVRDUDE) $(AVRDUDEFLAGS_BOOT) -t
 
 %.o: %.c
-	@echo "-- Compiling $@"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	echo "-- Compiling $@"
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OSELF): $(OBJ) $(HLOBJ)
-	@echo "-- Linking $@"
-	@mkdir -p bin
-	@$(CC) $(CFLAGS) $(OBJ) $(HLOBJ) -o $@ $(OS_LDFLAGS)
+	echo "-- Linking $@"
+	mkdir -p bin
+	$(CC) $(CFLAGS) $(OBJ) $(HLOBJ) -o $@ $(OS_LDFLAGS)
 
 $(BOOTELF): $(BOOTOBJ)
-	@echo "-- Linking $@"
-	@mkdir -p bin
-	@$(CC) $(CFLAGS) $(BOOTOBJ) -o $@ $(BOOT_LDFLAGS) -Wl,--section-start=.text=0x1E000
+	echo "-- Linking $@"
+	mkdir -p bin
+	$(CC) $(CFLAGS) $(BOOTOBJ) -o $@ $(BOOT_LDFLAGS) -Wl,--section-start=.text=0x1E000
 
 %.hex: %.elf
-	@echo "-- Generating hex file $@"
-	@$(OBJCOPY) -S -O ihex -R .eeprom $< $@
+	echo "-- Generating hex file $@"
+	$(OBJCOPY) -S -O ihex -R .eeprom $< $@
 
 $(OSLIB): $(DISTOBJ)
-	@echo "-- Archiving" $@
-	@$(AR) rcs $@ $(DISTOBJ)
+	echo "-- Archiving" $@
+	$(AR) rcs $@ $(DISTOBJ)
 
 $(HLLIB): $(HLOBJ)
-	@echo "-- Archiving" $@
-	@$(AR) rcs $@ $(HLOBJ)
+	echo "-- Archiving" $@
+	$(AR) rcs $@ $(HLOBJ)
 
 clean:
-	@echo "-- Cleaning objects"
-	@rm -f $(OBJ) $(BOOTOBJ) $(HLOBJ)
-	@rm -f $(OSELF) $(OSTARGET) $(OSLIB) $(HLLIB)
-	@rm -f $(BOOTELF) $(BOOTTARGET)
-	@rm -f gdbinit
-	@rm -rf doc/api/*
+	echo "-- Cleaning objects"
+	rm -f $(OBJ) $(BOOTOBJ) $(HLOBJ)
+	rm -f $(OSELF) $(OSTARGET) $(OSLIB) $(HLLIB)
+	rm -f $(BOOTELF) $(BOOTTARGET)
+	rm -f gdbinit
+	rm -rf doc/api/*
 
 gdb-config:
-	@rm -f gdbinit
-	@echo "define reset" >> gdbinit
-	@echo "SIGNAL SIGHUP" >> gdbinit
-	@echo "end" >> gdbinit
-	@echo "file $(OSELF)" >> gdbinit
-	@echo "target remote localhost:4242" >> gdbinit
-	@echo "break main" >> gdbinit
+	rm -f gdbinit
+	echo "define reset" >> gdbinit
+	echo "SIGNAL SIGHUP" >> gdbinit
+	echo "end" >> gdbinit
+	echo "file $(OSELF)" >> gdbinit
+	echo "target remote localhost:4242" >> gdbinit
+	echo "break main" >> gdbinit
 
 debug: $(OSELF) gdb-config
-	@echo "-- Starting debugger"
-	@$(AVARICE) -D -e -p --file $(OSELF) --jtag $(AVRDUDE_PORT) localhost:4242
-	@$(AVRGDB) --command=gdbinit
+	echo "-- Starting debugger"
+	$(AVARICE) -D -e -p --file $(OSELF) --jtag $(AVRDUDE_PORT) localhost:4242
+	$(AVRGDB) --command=gdbinit
 
 docs:
-	@echo "-- Generating documentation"
-	@( cat doc/doxygen/Doxyfile ; ./tools/get_version.sh ) | doxygen -
-	@cp doc/doxygen/reset.css doc/api
-	@cp doc/doxygen/main.css doc/api
-	@rm doc/api/tab* doc/api/doxygen.png
+	echo "-- Generating documentation"
+	( cat doc/doxygen/Doxyfile ; ./tools/get_version.sh ) | doxygen -
+	cp doc/doxygen/reset.css doc/api
+	cp doc/doxygen/main.css doc/api
+	rm doc/api/tab* doc/api/doxygen.png
 
 distclean:
-	@rm -rf dist/*
+	rm -rf dist/*
 
 simulate:
-	@gcc $(SRC) src/drivers/socket.c $(INCLUDES) -o client -D SIMULATE -lpthread
+	gcc $(SRC) src/drivers/socket.c $(INCLUDES) -o client -D SIMULATE -lpthread
 
 .PHONY: all
