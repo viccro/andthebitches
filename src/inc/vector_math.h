@@ -8,6 +8,4 @@ typedef struct{
 float dotProduct(vector, vector);
 vector crossProduct(vector, vector);
 
-
-
 #endif
