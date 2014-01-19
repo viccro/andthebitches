@@ -1,5 +1,6 @@
 #include <joyos.h>
 #include <math.h>
+#include <vector_math.h>
 
 #define PI 3.14159265
 #define ANGLE_FACTOR 651.898647649

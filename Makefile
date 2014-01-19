@@ -1,5 +1,6 @@
 # User source files
-USERSRC = user/robot/umain.c
+USERSRC =   user/robot/speed.c \
+            user/robot/vector_math.c
 
 # Serial port
 AVRDUDE_USERPORT ?= /dev/ttyUSB0
