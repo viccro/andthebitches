@@ -1,5 +1,5 @@
 # User source files
-USERSRC =   user/robot/speed.c \
+USERSRC =   user/robot/umain.c \
             user/robot/vector_math.c
 
 # Serial port
