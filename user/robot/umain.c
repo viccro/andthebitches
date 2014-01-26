@@ -5,6 +5,7 @@
 #define ANGLE_FACTOR 651.898647649
 
 uint8_t team_number[2] = {1,0};
+int min_speed = 50; // ??????????????????????
 
 extern volatile uint8_t robot_id; 
 
@@ -21,6 +22,8 @@ int limitVelocity(int velocity) {
 		return 255*(velocity/speed);
 	else if (speed < 0)
 		return 0;
+	else if (speed < min_speed && speed > 0)
+		return min_speed;
 	else
 		return velocity;
 }
@@ -30,10 +33,12 @@ int turn_to_heading(void){
 	copy_objects();
 	float kp= 0.06;
 	float desired_heading=atan((game.coords[1].y-game.coords[0].y)/(game.coords[1].x-game.coords[0].x));
-	if (game.coords[1].y>game.coords[0].y && desired_heading<0){//quadrant 2
-		desired_heading+=PI;}
-	else if (game.coords[1].y<game.coords[0].y && desired_heading>0){//quadrant 3
-		desired_heading-=PI;}
+	if (game.coords[1].y>game.coords[0].y && desired_heading<0){	//quadrant 2
+		desired_heading+=PI;
+	}
+	else if (game.coords[1].y<game.coords[0].y && desired_heading>0){	//quadrant 3
+		desired_heading-=PI;
+	}
 	desired_heading*=ANGLE_FACTOR;
 	//printf("desired heading %.3f\n", desired_heading);
 	int actual_heading=game.coords[0].theta;
@@ -67,11 +72,11 @@ int straight_to_heading(void){
 
 void reorient_and_drive(void){
 	copy_objects();
-	printf("%d is x_new, %d is y_new, %d is x_goal, %d is y_goal, %d is current_heading",game.coords[0].x,game.coords[0].y,game.coords[1].x,game.coords[1].y,game.coords[0].theta);
+	//printf("%d is x_new, %d is y_new, %d is x_goal, %d is y_goal, %d is current_heading",game.coords[0].x,game.coords[0].y,game.coords[1].x,game.coords[1].y,game.coords[0].theta);
 	
     while (turn_to_heading()){      //Turn first
     }
-	printf("%d is x_new, %d is y_new, %d is x_goal, %d is y_goal, %d is current_heading",game.coords[0].x,game.coords[0].y,game.coords[1].x,game.coords[1].y,game.coords[0].theta);
+	//printf("%d is x_new, %d is y_new, %d is x_goal, %d is y_goal, %d is current_heading",game.coords[0].x,game.coords[0].y,game.coords[1].x,game.coords[1].y,game.coords[0].theta);
 	while(1) {                      //Then go straight, with corrections if necessary
     straight_to_heading();
     turn_to_heading();
