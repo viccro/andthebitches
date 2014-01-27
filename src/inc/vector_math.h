@@ -11,7 +11,6 @@ typedef struct{
 
 extern int count;
 
-
 float dotProduct(vector, vector);
 vector crossProduct(vector, vector);
 

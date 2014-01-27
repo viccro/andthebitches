@@ -2,6 +2,7 @@
 #include <math.h>
 #include "vector_math.h"
 #include "spare_parts.h"
+#include "path_plan.h"
 
 #define PI 3.14159265
 #define ANGLE_FACTOR 651.898647649
@@ -21,10 +22,6 @@ int next_point_y = 0;
 int x_list[8] = { 1024,  2050, 1024,    0, -1024, -2050, -1024,     0};
 int y_list[8] = {-1024,     0, 1024, 2050,  1024,     0, -1024, -2050};
 
-//int red_goal_far[2]   = {x,y};
-//int red_goal_near[2]  = {x,y};
-//int blue_goal_far[2]  = {x,y};
-//int blue_goal_near[2] = {x,y};
 //////////////////////////////////
 
 
@@ -111,9 +108,9 @@ void vector_driving(void)
     float error_mag = fmaxf(error.i,error.j);
     vector error_norm = {error.i / error_mag, error.j / error_mag, 0};
     uint8_t v_fwd = (uint8_t) (dotProduct(curr, error) * kp_fwd);
-    uint8_t v_turn = 0;         // avoid divide-by-zero
-    if (error_mag > 1) 
-        v_turn = (uint8_t) (crossProduct(curr, error_norm).k * kp_turn);
+//    uint8_t v_turn = 0;         // avoid divide-by-zero
+//    if (error_mag > 1) 
+    v_turn = (uint8_t) (crossProduct(curr, error_norm).k * kp_turn);
 
     motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor
 	printf("v_fwd: %i",v_fwd);
