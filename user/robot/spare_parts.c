@@ -65,29 +65,29 @@ int pick_next_point_y(int gcy)
 //point p10R = {1200,700};
 //point p11R = {0, 1400};
 
-point p1B = {1200, -700};
-point p2B = {1200,  700};
+point p1B = {-1200, -1200};
+point p2B = { 1200, -1200};
 point p3B = { 1725, -1200}; //blue_goal_far;
-point p4B = {1200,  700}; //p2B;
-point p5B = { -735,  -550}; //tower_near_r;
-point p6B = {0,-1400};
-point p7B = {-1305,  1780}; //blue_goal_near;
-point p8B = {-1200,-700};
-point p9B = { -735,   550}; //tower_near_l;
-point p10B = {-1200,700};
-point p11B = {0, 1400};
+point p4B = { 1200, 700}; //p2B;
+point p5B = { -735, -550}; //tower_near_r;
+point p6B = {-1400, 0};
+point p7B = {-1305, 1780}; //blue_goal_near;
+point p8B = {-1200, 1200};
+point p9B = { -735, 550}; //tower_near_l;
+point p10B = {1200, 1200};
+point p11B = {1400, 0};
 
-point p1R = {-1200, -700};
-point p2R = {-1200,  700};
-point p3R = { 1720,  1355}; //red_goal_far;
-point p4R = {-1200,  700}; //p2R;
-point p5R = { -735,   550}; //tower_near_l;
-point p6R = {0,-1400};
+point p1R = {-1200, 1200};
+point p2R = { 1200, 1200};
+point p3R = { 1725, 1355}; //red_goal_far;
+point p4R = {-1200, 1200}; //p2R;
+point p5R = { -735, 550}; //tower_near_l;
+point p6R = {-1400, 0};
 point p7R = {-1255, -1700}; //red_goal_near;
-point p8R = {1200,-700};
-point p9R = { -735,  -550}; //tower_near_r;
-point p10R = {1200,700};
-point p11R = {0, 1400};
+point p8R = {-1200, -1200};
+point p9R = { -735, -550}; //tower_near_r;
+point p10R = {1200, -1200};
+point p11R = {1400, 0};
 
 
 void build_list_o_points_blue(point *list_o_points_blue) {

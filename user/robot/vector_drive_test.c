@@ -13,10 +13,10 @@ int usetup (void) {
 }
 
 float kp_fwd=.12;
-float kp_turn=.12;
+float kp_turn=2.1;
 int next_point_x = 0;
 int next_point_y = 0;
-int current_point_x = -100;
+int current_point_x = -500;
 int current_point_y = -1500;
 int current_theta = 1024;
 
@@ -27,14 +27,13 @@ void umain (void) {
     vector error_norm = {error.i / error_mag, error.j / error_mag, 0};
 	float dot = dotProduct(curr, error);
 	printf("dot product is %.3f\n",dot);
-    uint8_t v_fwd = (int) (dotProduct(curr, error) * kp_fwd);
-    uint8_t v_turn;
+    int v_fwd = (int) (dotProduct(curr, error) * kp_fwd);
 //    uint8_t v_turn = 0;         // avoid divide-by-zero
 //    if (error_mag > 1) 
 	vector cross = crossProduct(curr, error_norm);
-    v_turn = (int) (cross.k * kp_turn * 651.89);
+    int v_turn = (int) (cross.k * kp_turn * 651.89);
 	printf("cross product is %.3f\n",cross.k);
-	printf("uncasted v_turn = %.3f\n",cross.k * kp_turn * 651.89);
-	printf("v_fwd: %i",v_fwd);
-	printf("v_turn: %i",v_turn);
+	printf("uncasted v_turn = %.3f\n",floor(cross.k * kp_turn * 651.89));
+	printf("v_fwd: %d",v_fwd);
+	printf("v_turn: %d",v_turn);
 }
