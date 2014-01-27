@@ -2,7 +2,7 @@
 //TODO: eliminate floats!!
 
 void vector_driving(void);
-void pick_next_point(void);
+
 
 float dotProduct(vector a, vector b)
 {

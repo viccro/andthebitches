@@ -10,7 +10,7 @@ typedef struct{
 	}vector;
 
 extern int count;
-extern int is_nav_challenge;
+
 
 float dotProduct(vector, vector);
 vector crossProduct(vector, vector);

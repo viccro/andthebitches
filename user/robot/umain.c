@@ -9,13 +9,17 @@
 //Preset Globals
 uint8_t team_number[2] = {1,0};
 extern volatile uint8_t robot_id; 
-uint8_t next_point_x;
-uint8_t next_point_y;
+
 
 //Our Global Variables////////////
-int is_nav_challenge = 1;
+int is_nav_challenge = 0;
 float kp_fwd=.05;
 float kp_turn=.12;
+
+int next_point_x = 0;
+int next_point_y = 0;
+int x_list[8] = { 1024,  2050, 1024,    0, -1024, -2050, -1024,     0};
+int y_list[8] = {-1024,     0, 1024, 2050,  1024,     0, -1024, -2050};
 //////////////////////////////////
 
 // usetup is called during the calibration period. 
@@ -34,7 +38,7 @@ int limitVelocity(int velocity) {
 	else
 		return velocity;
 }
-
+/*
 int turn_to_heading(void){
 	
 	copy_objects();
@@ -45,7 +49,7 @@ int turn_to_heading(void){
 		desired_heading-=PI;}
 	desired_heading*=ANGLE_FACTOR;
 	//printf("desired heading %.3f\n", desired_heading);
-	int actual_heading=game.coords[0].theta;
+	uint8_t actual_heading=game.coords[0].theta;
 	//printf("actual heading %d\n", actual_heading);
 	float error_angle = desired_heading-actual_heading;	
 	//printf("error_angle %.3f\n",error_angle);
@@ -58,6 +62,7 @@ int turn_to_heading(void){
     return ((desired_heading - actual_heading) > 20);
 }
 
+
 int straight_to_heading(void){
 	copy_objects();
 	float x_now = game.coords[0].x;
@@ -67,7 +72,7 @@ int straight_to_heading(void){
 	float x_diff_squared = pow((x_new-x_now),2);
 	float y_diff_squared = pow((y_new-y_now),2);
 	float error_distance = sqrt(x_diff_squared + y_diff_squared);
-	int error_velocity = (int) (kp_fwd*error_distance);
+	uint8_t error_velocity = (uint8_t) (kp_fwd*error_distance);
 	//printf("error_velocity: %d\n",error_velocity);
 	motor_set_vel(4,limitVelocity(error_velocity));
     return (error_distance < 10);
@@ -85,33 +90,24 @@ void reorient_and_drive(void){
     turn_to_heading();
 	}
 }
-
-void pick_next_point(void)
-{
-if (is_nav_challenge == 1)
-    {
-    next_point_x = game.coords[1].x;
-    next_point_y = game.coords[1].y;
-    }
-else
-    {
-    next_point_x = 1;       //FIX THIS
-    next_point_y = 1;       //FIX THIS
-    }
-}
-
+*/
 
 void vector_driving(void)
 {
-    pick_next_point();
+    if (((game.coords[0].x - next_point_x) < 40) && ((game.coords[0].y - next_point_y) < 40))
+    {
+        next_point_x = pick_next_point_x(game.coords[1].x);
+        next_point_y = pick_next_point_y(game.coords[1].y);
+        printf("next_point_x: %i, next_point_y: %i\n\n\n",next_point_x,next_point_y);
+    }
     vector curr = {cos(game.coords[0].theta), sin(game.coords[0].theta), 0};
     vector error = {(next_point_x - game.coords[0].x),(next_point_y - game.coords[0].y),0};
     float error_mag = fmaxf(error.i,error.j);
     vector error_norm = {error.i / error_mag, error.j / error_mag, 0};
-    int v_fwd = (int) (dotProduct(curr, error) * kp_fwd);
-    int v_turn = 0;         // avoid divide-by-zero
+    uint8_t v_fwd = (uint8_t) (dotProduct(curr, error) * kp_fwd);
+    uint8_t v_turn = 0;         // avoid divide-by-zero
     if (error_mag > 1) 
-        v_turn = (int) (crossProduct(curr, error_norm).k * kp_turn);
+        v_turn = (uint8_t) (crossProduct(curr, error_norm).k * kp_turn);
 
     motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor
 	printf("v_fwd: %i\n",v_fwd);
