@@ -20,10 +20,15 @@ int next_point_x = 0;
 int next_point_y = 0;
 int x_list[8] = { 1024,  2050, 1024,    0, -1024, -2050, -1024,     0};
 int y_list[8] = {-1024,     0, 1024, 2050,  1024,     0, -1024, -2050};
+
+//int red_goal_far[2]   = {x,y};
+//int red_goal_near[2]  = {x,y};
+//int blue_goal_far[2]  = {x,y};
+//int blue_goal_near[2] = {x,y};
 //////////////////////////////////
 
-// usetup is called during the calibration period. 
 
+// usetup is called during the calibration period. 
 int usetup (void) {
 	robot_id = 1;
     return 0;
@@ -98,8 +103,9 @@ void vector_driving(void)
     {
         next_point_x = pick_next_point_x(game.coords[1].x);
         next_point_y = pick_next_point_y(game.coords[1].y);
-        printf("next_point_x: %i, next_point_y: %i\n\n\n",next_point_x,next_point_y);
+        printf("\n\n\nnext_point_x: %i, next_point_y: %i\n\n\n\n",next_point_x,next_point_y);
     }
+        printf("\t\t\t\t\t\t\tcurrent_point_x: %i, current_point_y: %i\n\n",game.coords[0].x,game.coords[0].y);
     vector curr = {cos(game.coords[0].theta), sin(game.coords[0].theta), 0};
     vector error = {(next_point_x - game.coords[0].x),(next_point_y - game.coords[0].y),0};
     float error_mag = fmaxf(error.i,error.j);
@@ -110,9 +116,9 @@ void vector_driving(void)
         v_turn = (uint8_t) (crossProduct(curr, error_norm).k * kp_turn);
 
     motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor
-	printf("v_fwd: %i\n",v_fwd);
+	printf("v_fwd: %i",v_fwd);
     motor_set_vel(5,limitVelocity(v_turn));         //Turn motor
-	printf("v_turn: %i\n",v_turn);
+	printf("v_turn: %i",v_turn);
 
 //    sleep(.01);
 }
@@ -123,8 +129,10 @@ void vector_driving(void)
 void umain (void) {
 
     while(1){
+    copy_objects();
     vector_driving();
-    delay(10);
+//    printf("\t\t\t\t\t\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n\n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
+    delay(1000);
     }
     // Will never return, but the compiler complains without a return
     // statement.
