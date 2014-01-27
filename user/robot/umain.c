@@ -106,7 +106,7 @@ void vector_driving(void)
         printf("\n\n\nnext_point_x: %i, next_point_y: %i\n\n\n\n",next_point_x,next_point_y);
     }
         printf("\t\t\t\t\t\t\tcurrent_point_x: %i, current_point_y: %i\n\n",game.coords[0].x,game.coords[0].y);
-    vector curr = {cos(game.coords[0].theta), sin(game.coords[0].theta), 0};
+    vector curr = {cos(game.coords[0].theta/ANGLE_FACTOR), sin(game.coords[0].theta/ANGLE_FACTOR), 0};
     vector error = {(next_point_x - game.coords[0].x),(next_point_y - game.coords[0].y),0};
     float error_mag = fmaxf(error.i,error.j);
     vector error_norm = {error.i / error_mag, error.j / error_mag, 0};
