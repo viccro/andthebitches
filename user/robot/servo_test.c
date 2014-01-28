@@ -8,13 +8,17 @@ int usetup (void) {
 
 int umain (void) {
 	while(1) {
-	servo_set_pos(0,100);
+	servo_set_pos(0,200);
+	servo_set_pos(1,200);
 	pause(1000);
 	servo_set_pos(0,256);
+	servo_set_pos(1,256);
 	pause(1000);
-	servo_set_pos(0,400);
+	servo_set_pos(0,300);
+	servo_set_pos(1,300);
 	pause(1000);
 	servo_set_pos(0,256);
+	servo_set_pos(1,256);
 	pause(1000);
 	}
 	return 0;

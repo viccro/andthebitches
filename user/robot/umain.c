@@ -150,7 +150,7 @@ void umain (void) {
         delay(500);
     }    
         printf("waiting to push some shit\n");
-    while 1
+    while (1)
     {}
 
     printf("Yep, everything has failed. Sucks.\n");
