@@ -3,6 +3,7 @@
 #include "vector_math.h"
 #include "spare_parts.h"
 #include <stdio.h>
+#include "log.h"
 //#include "path_plan.h"
 
 #define PI 3.14159265
@@ -30,8 +31,8 @@ point blue_goal     = { 1730,-1195};
 point blue_waypoint = {-1200, 1200};
 
 ///////Parameters/////////////////
-int buffer_around_waypoint   = 127;   // ~3 inches
-int buffer_around_goal       = 75;    //~2 inches
+int buffer_around_waypoint   = 120;   // ~3 inches
+int buffer_around_goal       = 42;    //~2 inches
 //////////////////////////////////
 
 // usetup is called during the calibration period. 
@@ -57,39 +58,45 @@ int where_to(void)
     if ((accomplished_corner == true) && (side == 'r'))
     {
         next_point = red_goal;
+        printf("next_point: red_goal, %i, %i\n",next_point.x,next_point.y);
         return ok;
     }
     else if ((accomplished_corner == true) && (side == 'b'))
     {
         next_point = blue_goal;
+        printf("next_point: blue_goal, %i, %i\n",next_point.x,next_point.y);
         return ok;
     }
     else if ((accomplished_corner == false) && (side == 'r'))
     {
         next_point = red_waypoint;
+        printf("next_point: red_wp, %i, %i\n",next_point.x,next_point.y);
         return ok;
     }
     else if ((accomplished_corner == false) && (side == 'b'))
     {
         next_point = blue_waypoint;
+        printf("next_point: blue_wp, %i, %i\n",next_point.x,next_point.y);
         return ok;
     }
     return error;
 }
 
-void flip_flag_waypoint(void)
+void check_flag_waypoint(void)
 {
     point current_point = {game.coords[0].x,game.coords[0].y};
-    if (dist_sqd(current_point,next_point) < (buffer_around_waypoint * buffer_around_waypoint))
+    printf("dist to waypoint: %i\n",dist(current_point,next_point));
+    if (dist(current_point,next_point) < (buffer_around_waypoint))
     {
         accomplished_corner = true;
     }
 }
 
-void flip_flag_goal(void)
+void check_flag_goal(void)
 {
     point current_point = {game.coords[0].x,game.coords[0].y};
-    if (dist_sqd(current_point,next_point) < (buffer_around_goal * buffer_around_goal))
+    printf("dist to goal: %i\n",dist(current_point,next_point));
+    if (dist(current_point,next_point) < (buffer_around_goal))
     {
         accomplished_goal = true;
     }
@@ -134,24 +141,25 @@ void umain (void) {
 	
     printf("Start driving to waypoint\n");
 
-    while((vector_driving() == ok) && (accomplished_corner = false))
+    while((vector_driving() == ok) && (accomplished_corner == false))
     {
         copy_objects();      //		printf("goal x = %d, goal y = %d\t\t", next_point_x, next_point_y);        
-        flip_flag_waypoint();
-        delay(500);          //printf("\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
+        check_flag_waypoint();
+        delay(500);          printf("\t\tcurrent_point_x: %i, current_point_y: %i\n",game.coords[0].x,game.coords[0].y);
     }
 
     printf("Start driving to goal\n");
 
-    while((vector_driving() == ok) && (accomplished_goal = false))
+    while((vector_driving() == ok) && (accomplished_goal == false))
     {
         copy_objects();     
-        flip_flag_goal();
+        check_flag_goal();
         delay(500);
     }    
         printf("waiting to push some shit\n");
-    while (1)
-    {}
 
-    printf("Yep, everything has failed. Sucks.\n");
+        motor_set_vel(4,0);         //Straight motor stopped
+        motor_set_vel(5,0);         //Turning motor stopped       
+
+//    printf("Yep, everything has failed. Sucks.\n");
 }
