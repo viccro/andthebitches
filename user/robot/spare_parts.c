@@ -7,7 +7,7 @@ void delay(int n)
     { }
 }
 
-int dist_sqd(point a,point b)
+int dist(point a,point b)
 {
-    return (int) ((a.x + b.x) * (a.x + b.x) + (a.y + b.y) * (a.y + b.y));
+    return (int) sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
