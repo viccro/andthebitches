@@ -31,19 +31,6 @@ int index_num;
 // usetup is called during the calibration period. 
 int usetup (void) {
 	robot_id = 1;
-	copy_objects();
-	if (game.coords[0].y > 0) {
-		build_list_o_points_red(point_list);
-		next_point_x = -1200;
-		next_point_y = 1200;
-		printf("ON RED SIDE, BITCHES!!!!");
-	}
-    else {
-		build_list_o_points_blue(point_list);
-		next_point_x = -1200;
-		next_point_y = -1200;
-		printf("ON BLUE SIDE, MOTHERFUCKERS!!!!");
-	}
     return 0;
 }
 
@@ -89,7 +76,19 @@ void vector_driving(void)
 
 
 void umain (void) {
-	
+	copy_objects();
+	if (game.coords[0].y > 0) {
+		build_list_o_points_red(point_list);
+		next_point_x = -1200;
+		next_point_y = 1200;
+		printf("ON RED SIDE, BITCHES!!!!");
+	}
+    else {
+		build_list_o_points_blue(point_list);
+		next_point_x = -1200;
+		next_point_y = -1200;
+		printf("ON BLUE SIDE, MOTHERFUCKERS!!!!");
+	}	
     while(1)
     {
         copy_objects();
