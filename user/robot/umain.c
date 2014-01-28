@@ -68,9 +68,9 @@ void vector_driving(void)
     int v_turn = (int) (crossProduct(curr, error_norm).k * kp_turn * ANGLE_FACTOR);
 
     motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor
-	//printf("v_fwd: %i\t",v_fwd);
+	printf("v_fwd: %i, ",v_fwd);
     motor_set_vel(5,limitVelocity(v_turn));         //Turn motor
-	//printf("v_turn: %i\t\t\t",v_turn);
+	printf("v_turn: %i",v_turn);
 }
 
 
@@ -92,9 +92,9 @@ void umain (void) {
     while(1)
     {
         copy_objects();
-		//printf("goal point x = %d \t goal point y = %d", next_point_x, next_point_y);
+		printf("\t\tgoal point x = %d, goal point y = %d", next_point_x, next_point_y);
         vector_driving();
-    //    printf("\t\t\t\t\t\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n\n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
+        printf("\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
         delay(500);
     }
     // Will never return, but the compiler complains without a return
