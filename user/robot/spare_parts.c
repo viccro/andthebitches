@@ -1,6 +1,6 @@
 #include "spare_parts.h"
 
-int count = 0;
+//int count = 0;
 
 void delay(int n)
 {
@@ -10,6 +10,7 @@ void delay(int n)
     }
 }
 
+/*
 point pick_next_point(point* point_list)
 {
     point next_point;
@@ -19,6 +20,10 @@ point pick_next_point(point* point_list)
     next_point = point_list[count];
     return next_point;
 }
+*/
+
+
+
 /*
 int pick_next_point_y(int gcy)
 {
@@ -32,39 +37,8 @@ int pick_next_point_y(int gcy)
 ////////////////
 // Waypoints  //986
 ////////////////
-//point red_goal_far   = { 1720,  1355};
-//point red_goal_near  = {-1255, -1700};
-//point blue_goal_far  = { 1725, -1200};
-//point blue_goal_near = {-1305,  1780};
-//point tower_near_r   = { -735,  -550};
-//point tower_near_l   = { -735,   550};
 
-
-
-//point p1B = {1200, -700};
-//point p2B = {1200,  700};
-//point p3B = { 1725, -1200}; //blue_goal_far;
-//point p4B = {1200,  700}; //p2B;
-//point p5B = { -735,  -550}; //tower_near_r;
-//point p6B = {0,-1400};
-//point p7B = {-1305,  1780}; //blue_goal_near;
-//point p8B = {-1200,-700};
-//point p9B = { -735,   550}; //tower_near_l;
-//point p10B = {-1200,700};
-//point p11B = {0, 1400};
-
-//point p1R = {-1200, -700};
-//point p2R = {-1200,  700};
-//point p3R = { 1720,  1355}; //red_goal_far;
-//point p4R = {-1200,  700}; //p2R;
-//point p5R = { -735,   550}; //tower_near_l;
-//point p6R = {0,-1400};
-//point p7R = {-1255, -1700}; //red_goal_near;
-//point p8R = {1200,-700};
-//point p9R = { -735,  -550}; //tower_near_r;
-//point p10R = {1200,700};
-//point p11R = {0, 1400};
-
+/*
 point p1B = {-1200, -1200};
 point p2B = { 1200, -1200};
 point p3B = { 1725, -1200}; //blue_goal_far;
@@ -136,5 +110,4 @@ void build_list_o_points_red(point *list_o_points_red) {
 	return list_o_points_red;
 }
 
-
-
+*/

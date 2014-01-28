@@ -16,17 +16,22 @@ extern volatile uint8_t robot_id;
 //Our Global Variables////////////
 int is_nav_challenge = 0;
 float kp_fwd=.1;
-float kp_turn=.1;
+float kp_turn=.05;
 
 int next_point_x;
 int next_point_y;
+point next_point;
+char side;
+//point point_list[18];
+//int index_num;
+bool accomplished_corner = false;
+point red_goal      = { 1730, 1355};
+point red_waypoint  = {-1200, 1200};
+point blue_goal     = { 1730,-1195};
+point blue_waypoint = {-1200, 1200};
 
-//int x_list[8] = { 1024,  2050, 1024,    0, -1024, -2050, -1024,     0};
-//int y_list[8] = {-1024,     0, 1024, 2050,  1024,     0, -1024, -2050};
-point point_list[18];
-int index_num;
+enum COMPLETION {ok, error};      /* ok = 0, error = 1 */
 //////////////////////////////////
-
 
 // usetup is called during the calibration period. 
 int usetup (void) {
@@ -46,58 +51,83 @@ int limitVelocity(int velocity) {
 		return velocity;
 }
 
-
-void vector_driving(void)
+int where_to(void)
 {
-    if (((game.coords[0].x - next_point_x) < 40) && ((game.coords[0].y - next_point_y) < 40))
+    if ((accomplished_corner == true) && (side == 'r'))
     {
-        point p = pick_next_point(point_list);
-        next_point_x = p.x;
-        next_point_y = p.y;
-    //    printf("\n\n\nnext_point_x: %i, next_point_y: %i\n\n\n\n",next_point_x,next_point_y);
+        next_point = red_goal;
+        return ok;
     }
-    //    printf("\t\t\t\tcurrent_point_x: %i, \t current_point_y: %i, current_heading: %i\n\n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
+    else if ((accomplished_corner == true) && (side == 'b'))
+    {
+        next_point = blue_goal;
+        return ok;
+    }
+    else if ((accomplished_corner == false) && (side == 'r'))
+    {
+        next_point = red_waypoint;
+        return ok;
+    }
+    else if ((accomplished_corner == false) && (side == 'b'))
+    {
+        next_point = blue_waypoint;
+        return ok;
+    }
+    return error;
+}
+
+int vector_driving(void)
+{
+    if (where_to() == error)
+    {
+        motor_set_vel(4,0);         //Straight motor stopped
+        motor_set_vel(5,0);         //Turning motor stopped
+    	printf("Dear god, what have you done?\n");
+        return error;
+    }   
     vector curr = {cos(game.coords[0].theta/ANGLE_FACTOR), sin(game.coords[0].theta/ANGLE_FACTOR), 0};
-	
+	next_point_x = next_point.x;
+    next_point_y = next_point.y;
+
     vector error = {(next_point_x - game.coords[0].x),(next_point_y - game.coords[0].y),0};
     float error_mag = fmaxf(error.i,error.j); // Optimization? 
     vector error_norm = {error.i / error_mag, error.j / error_mag, 0};
+
     int v_fwd = (int) (dotProduct(curr, error) * kp_fwd);
-//    uint8_t v_turn = 0;         // avoid divide-by-zero
-//    if (error_mag > 1) 
     int v_turn = (int) (crossProduct(curr, error_norm).k * kp_turn * ANGLE_FACTOR);
 
     motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor
-	printf("v_fwd: %i, ",v_fwd);
+//	printf("v_fwd: %i, ",v_fwd);
     motor_set_vel(5,limitVelocity(v_turn));         //Turn motor
-	printf("v_turn: %i",v_turn);
+//	printf("v_turn: %i",v_turn);
+    return ok;
 }
-
-
 
 void umain (void) {
 	copy_objects();
 	if (game.coords[0].y > 0) {
-		build_list_o_points_red(point_list);
-		next_point_x = -1200;
-		next_point_y = 1200;
-		printf("ON RED SIDE, BITCHES!!!!");
+//		build_list_o_points_red(point_list);
+//		next_point_x = -1200;
+//		next_point_y = 1200;
+        side = 'r';
+		printf("ON RED SIDE, BITCHES!!!!\n");
 	}
     else {
-		build_list_o_points_blue(point_list);
-		next_point_x = -1200;
-		next_point_y = -1200;
-		printf("ON BLUE SIDE, MOTHERFUCKERS!!!!");
-	}	
-    while(1)
+//		build_list_o_points_blue(point_list);
+//		next_point_x = -1200;
+//		next_point_y = -1200;
+        side = 'b';
+		printf("ON BLUE SIDE, MOTHERFUCKERS!!!!\n");
+	}
+	
+    while(vector_driving() == ok)
     {
         copy_objects();
-		printf("\t\tgoal point x = %d, goal point y = %d", next_point_x, next_point_y);
-        vector_driving();
-        printf("\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
         delay(500);
+
+//		printf("goal x = %d, goal y = %d\t\t", next_point_x, next_point_y);        
+        //printf("\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
     }
-    // Will never return, but the compiler complains without a return
-    // statement.
-//    return 0;
+
+    printf("Yep, everything has failed. Sucks.\n");
 }

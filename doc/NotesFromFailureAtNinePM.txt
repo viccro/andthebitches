@@ -1,0 +1,27 @@
+We were blue.
+
+We got to goal x = 1200, y = -1200! Then shit went down.
+
+We think that we got to:
+    goal x = -1400, goal y = 0          //Yeah! We did get this one! But what happened to points 2-5?
+    goal x = -1305, goal y = 1780       //blue_goal_near    
+    goal x = -1200, goal y = 1200           //bottom-left
+    goal x = -735, goal y = 550         //tower_near_l
+    goal x = 1200, goal y = 1200            //top-right
+    goal x = 1400, goal y = 0           //top of board
+
+And then tried to get here, but this is where we crash.
+goal x = 1725, goal y = -1200
+
+point p1B = {-1200, -1200};
+    point p2B = { 1200, -1200};
+    point p3B = { 1725, -1200}; //blue_goal_far;
+    point p4B = { 1200, 700}; //p2B;                //Right. This shit's not going to fly without clipping the box.
+    point p5B = { -735, -550}; //tower_near_r;      //Did we actually get this one? Could this one have triggered the skip? The world may never know!
+point p6B = {-1400, 0};
+point p7B = {-1305, 1780}; //blue_goal_near;
+point p8B = {-1200, 1200};
+point p9B = { -735, 550}; //tower_near_l;
+point p10B = {1200, 1200};
+point p11B = {1400, 0}; 
+p3b is next. -- blue_goal_far. 
