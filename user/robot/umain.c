@@ -12,8 +12,7 @@
 uint8_t team_number[2] = {1,0};
 extern volatile uint8_t robot_id; 
 
-
-//Our Global Variables////////////
+/////Our Global Variables////////////
 int is_nav_challenge = 0;
 float kp_fwd=.1;
 float kp_turn=.05;
@@ -22,15 +21,17 @@ int next_point_x;
 int next_point_y;
 point next_point;
 char side;
-//point point_list[18];
-//int index_num;
+
 bool accomplished_corner = false;
+bool accomplished_goal   = false;
 point red_goal      = { 1730, 1355};
 point red_waypoint  = {-1200, 1200};
 point blue_goal     = { 1730,-1195};
 point blue_waypoint = {-1200, 1200};
 
-enum COMPLETION {ok, error};      /* ok = 0, error = 1 */
+///////Parameters/////////////////
+int buffer_around_waypoint   = 127;   // ~3 inches
+int buffer_around_goal       = 75;    //~2 inches
 //////////////////////////////////
 
 // usetup is called during the calibration period. 
@@ -76,6 +77,24 @@ int where_to(void)
     return error;
 }
 
+void flip_flag_waypoint(void)
+{
+    point current_point = {game.coords[0].x,game.coords[0].y};
+    if (dist_sqd(current_point,next_point) < (buffer_around_waypoint * buffer_around_waypoint))
+    {
+        accomplished_corner = true;
+    }
+}
+
+void flip_flag_goal(void)
+{
+    point current_point = {game.coords[0].x,game.coords[0].y};
+    if (dist_sqd(current_point,next_point) < (buffer_around_goal * buffer_around_goal))
+    {
+        accomplished_goal = true;
+    }
+}
+
 int vector_driving(void)
 {
     if (where_to() == error)
@@ -96,38 +115,43 @@ int vector_driving(void)
     int v_fwd = (int) (dotProduct(curr, error) * kp_fwd);
     int v_turn = (int) (crossProduct(curr, error_norm).k * kp_turn * ANGLE_FACTOR);
 
-    motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor
-//	printf("v_fwd: %i, ",v_fwd);
-    motor_set_vel(5,limitVelocity(v_turn));         //Turn motor
-//	printf("v_turn: %i",v_turn);
+    motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor //	printf("v_fwd: %i, ",v_fwd);
+    motor_set_vel(5,limitVelocity(v_turn));         //Turn motor    //	printf("v_turn: %i",v_turn);
     return ok;
 }
 
 void umain (void) {
 	copy_objects();
 	if (game.coords[0].y > 0) {
-//		build_list_o_points_red(point_list);
-//		next_point_x = -1200;
-//		next_point_y = 1200;
         side = 'r';
 		printf("ON RED SIDE, BITCHES!!!!\n");
 	}
+
     else {
-//		build_list_o_points_blue(point_list);
-//		next_point_x = -1200;
-//		next_point_y = -1200;
         side = 'b';
 		printf("ON BLUE SIDE, MOTHERFUCKERS!!!!\n");
 	}
 	
-    while(vector_driving() == ok)
-    {
-        copy_objects();
-        delay(500);
+    printf("Start driving to waypoint\n");
 
-//		printf("goal x = %d, goal y = %d\t\t", next_point_x, next_point_y);        
-        //printf("\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
+    while((vector_driving() == ok) && (accomplished_corner = false))
+    {
+        copy_objects();      //		printf("goal x = %d, goal y = %d\t\t", next_point_x, next_point_y);        
+        flip_flag_waypoint();
+        delay(500);          //printf("\t\tcurrent_point_x: %i, current_point_y: %i, current_heading: %i, \n",game.coords[0].x,game.coords[0].y,game.coords[0].theta);
     }
+
+    printf("Start driving to goal\n");
+
+    while((vector_driving() == ok) && (accomplished_goal = false))
+    {
+        copy_objects();     
+        flip_flag_goal();
+        delay(500);
+    }    
+        printf("waiting to push some shit\n");
+    while 1
+    {}
 
     printf("Yep, everything has failed. Sucks.\n");
 }

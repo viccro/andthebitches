@@ -6,14 +6,14 @@
 
 #define waypoints_length 18
 
+enum COMPLETION {ok, error};      /* ok = 0, error = 1 */
+
 typedef struct {
 	int x,y;
 	}point; 
 
-point pick_next_point(point*);
 void delay(int);
 
-void build_list_o_points_blue(point*);
-void build_list_o_points_red(point*);
+int dist_sqd(point,point);
 
 #endif
