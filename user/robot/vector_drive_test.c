@@ -36,4 +36,6 @@ void umain (void) {
 	printf("uncasted v_turn = %.3f\n",floor(cross.k * kp_turn * 651.89));
 	printf("v_fwd: %d",v_fwd);
 	printf("v_turn: %d",v_turn);
+	printf("dist to waypoint: %i\n",dist(0, 0, 500, 500));
+	printf("dist to waypoint: %i\n",dist(100, 100, 500, 500));
 }

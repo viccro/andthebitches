@@ -3,7 +3,7 @@
 #include "vector_math.h"
 #include "spare_parts.h"
 #include <stdio.h>
-#include "log.h"
+//#include "log.h"
 //#include "path_plan.h"
 
 #define PI 3.14159265
@@ -20,34 +20,61 @@ float kp_turn=.05;
 
 int next_point_x;
 int next_point_y;
-point next_point;
+//point next_point;
 char side;
 
 bool accomplished_corner = false;
 bool accomplished_goal   = false;
-point red_goal      = { 1730, 1355};
-point red_waypoint  = {-1200, 1200};
-point blue_goal     = { 1730,-1195};
-point blue_waypoint = {-1200, 1200};
+bool straight_ahead = false;
+//point red_goal      = { 1730, 1355};
+//point red_waypoint  = {-1200, 1200};
+//point blue_goal     = { 1730,-1195};
+//point blue_waypoint = {-1200, 1200}; // fucking wrong
+int red_goal_x = 1400;
+int red_goal_y = 1400;
+int red_waypoint_x = -1100;
+int red_waypoint_y = 1100;
+int blue_goal_x = 1400;
+int blue_goal_y = -1400;
+int blue_waypoint_x = -1100;
+int blue_waypoint_y = -1100;
+
 
 ///////Parameters/////////////////
 int buffer_around_waypoint   = 120;   // ~3 inches
 int buffer_around_goal       = 42;    //~2 inches
+int buffer_theta 			 = 20;
 //////////////////////////////////
 
 // usetup is called during the calibration period. 
 int usetup (void) {
 	robot_id = 1;
+	servo_set_pos(0,225);
+	servo_set_pos(1,475);
     return 0;
 }
 
-int limitVelocity(int velocity) {
+int limitVelocityROT(int velocity) {
 	int speed = abs(velocity);
 	if(speed > 200) 
 		return 200*(velocity/speed);
 	else if (speed < 0)
 		return 0;
-	else if (speed < 75 && speed > 0)
+	else if (speed < 80 && speed > 0)
+		return 80*(velocity/speed);
+	//else if (speed < 20 && speed > 0)
+	//	return 0;
+	else
+		return velocity;
+}
+
+int limitVelocityFWD(int velocity) {
+	int speed = abs(velocity);
+	if(speed > 200) 
+		return 200*(velocity/speed);
+	else if (speed < 0)
+		return 0;
+	else if (speed < 125 && speed > 0)
 		return 125*(velocity/speed);
 	else
 		return velocity;
@@ -57,26 +84,30 @@ int where_to(void)
 {
     if ((accomplished_corner == true) && (side == 'r'))
     {
-        next_point = red_goal;
-        printf("next_point: red_goal, %i, %i\n",next_point.x,next_point.y);
+        next_point_x = red_goal_x;
+		next_point_y = red_goal_y;
+        //printf("next_point: red_goal, %i, %i\n",next_point_x,next_point_y);
         return ok;
     }
     else if ((accomplished_corner == true) && (side == 'b'))
     {
-        next_point = blue_goal;
-        printf("next_point: blue_goal, %i, %i\n",next_point.x,next_point.y);
+        next_point_x = blue_goal_x;
+		next_point_y = blue_goal_y;
+        //printf("next_point: blue_goal, %i, %i\n",next_point_x,next_point_y);
         return ok;
     }
     else if ((accomplished_corner == false) && (side == 'r'))
     {
-        next_point = red_waypoint;
-        printf("next_point: red_wp, %i, %i\n",next_point.x,next_point.y);
+        next_point_x = red_waypoint_x;
+		next_point_y = red_waypoint_y;
+        //printf("next_point: red_wp, %i, %i\n",next_point_x,next_point_y);
         return ok;
     }
     else if ((accomplished_corner == false) && (side == 'b'))
     {
-        next_point = blue_waypoint;
-        printf("next_point: blue_wp, %i, %i\n",next_point.x,next_point.y);
+        next_point_x = blue_waypoint_x;
+		next_point_y = blue_waypoint_y;
+        //printf("next_point: blue_wp, %i, %i\n",next_point_x,next_point_y);
         return ok;
     }
     return error;
@@ -84,22 +115,35 @@ int where_to(void)
 
 void check_flag_waypoint(void)
 {
-    point current_point = {game.coords[0].x,game.coords[0].y};
-    printf("dist to waypoint: %i\n",dist(current_point,next_point));
-    if (dist(current_point,next_point) < (buffer_around_waypoint))
+    //point current_point = {game.coords[0].x,game.coords[0].y};
+    //printf("dist to waypoint: %i\n",dist(game.coords[0].x, game.coords[0].y, next_point_x, next_point_y));
+    if (dist(game.coords[0].x, game.coords[0].y, next_point_x, next_point_y) < (buffer_around_waypoint))
     {
         accomplished_corner = true;
     }
+	//printf("accomplished corner: %d", accomplished_corner);
 }
 
 void check_flag_goal(void)
 {
-    point current_point = {game.coords[0].x,game.coords[0].y};
-    printf("dist to goal: %i\n",dist(current_point,next_point));
-    if (dist(current_point,next_point) < (buffer_around_goal))
+    //point current_point = {game.coords[0].x,game.coords[0].y};
+    //printf("dist to goal: %i\n",dist(game.coords[0].x, game.coords[0].y, next_point_x, next_point_y));
+    if (dist(game.coords[0].x, game.coords[0].y, next_point_x, next_point_y) < (buffer_around_goal))
     {
         accomplished_goal = true;
     }
+	//printf("accomplished goal: %d", accomplished_goal);
+}
+
+void check_flag_straight(void)
+{
+    //point current_point = {game.coords[0].x,game.coords[0].y};
+    //printf("dist to goal: %i\n",dist(game.coords[0].x, game.coords[0].y, next_point_x, next_point_y));
+    if (abs(0-game.coords[0].theta) < (buffer_theta))
+    {
+        straight_ahead = true;
+    }
+	//printf("accomplished goal: %d", accomplished_goal);
 }
 
 int vector_driving(void)
@@ -112,8 +156,8 @@ int vector_driving(void)
         return error;
     }   
     vector curr = {cos(game.coords[0].theta/ANGLE_FACTOR), sin(game.coords[0].theta/ANGLE_FACTOR), 0};
-	next_point_x = next_point.x;
-    next_point_y = next_point.y;
+	//next_point_x = next_point.x;
+    //next_point_y = next_point.y;
 
     vector error = {(next_point_x - game.coords[0].x),(next_point_y - game.coords[0].y),0};
     float error_mag = fmaxf(error.i,error.j); // Optimization? 
@@ -122,44 +166,91 @@ int vector_driving(void)
     int v_fwd = (int) (dotProduct(curr, error) * kp_fwd);
     int v_turn = (int) (crossProduct(curr, error_norm).k * kp_turn * ANGLE_FACTOR);
 
-    motor_set_vel(4,limitVelocity(v_fwd));         //Straight motor //	printf("v_fwd: %i, ",v_fwd);
-    motor_set_vel(5,limitVelocity(v_turn));         //Turn motor    //	printf("v_turn: %i",v_turn);
+    motor_set_vel(4,limitVelocityFWD(v_fwd));         //Straight motor //	
+	//printf("v_fwd: %i, ",v_fwd);
+    motor_set_vel(5,limitVelocityROT(v_turn));         //Turn motor    //	
+	//printf("v_turn: %i",v_turn);
     return ok;
+}
+
+int vector_spinning(void)
+{
+	if (where_to() == error)
+    {
+        motor_set_vel(4,0);         //Straight motor stopped
+        motor_set_vel(5,0);         //Turning motor stopped
+    	printf("Dear god, what have you done?\n");
+        return error;
+    }   
+	int kp_turn_spin = .08;
+	int v_turn = (int) (kp_turn_spin * (0-game.coords[0].theta));
+	motor_set_vel(5,limitVelocityROT(v_turn));
+	return ok;
 }
 
 void umain (void) {
 	copy_objects();
 	if (game.coords[0].y > 0) {
         side = 'r';
-		printf("ON RED SIDE, BITCHES!!!!\n");
+		//printf("ON RED SIDE, BITCHES!!!!\n");
 	}
 
     else {
         side = 'b';
-		printf("ON BLUE SIDE, MOTHERFUCKERS!!!!\n");
+		//printf("ON BLUE SIDE, MOTHERFUCKERS!!!!\n");
 	}
 	
-    printf("Start driving to waypoint\n");
+    //printf("Start driving to waypoint\n");
 
     while((vector_driving() == ok) && (accomplished_corner == false))
     {
         copy_objects();      //		printf("goal x = %d, goal y = %d\t\t", next_point_x, next_point_y);        
         check_flag_waypoint();
-        delay(500);          printf("\t\tcurrent_point_x: %i, current_point_y: %i\n",game.coords[0].x,game.coords[0].y);
+        //delay(100);          
+		//printf("\t\tcurrent_point_x: %i, current_point_y: %i\n",game.coords[0].x,game.coords[0].y);
     }
 
-    printf("Start driving to goal\n");
+    //printf("Start driving to goal\n");
 
     while((vector_driving() == ok) && (accomplished_goal == false))
     {
         copy_objects();     
         check_flag_goal();
-        delay(500);
+        //delay(100);
     }    
-        printf("waiting to push some shit\n");
 
-        motor_set_vel(4,0);         //Straight motor stopped
-        motor_set_vel(5,0);         //Turning motor stopped       
+	//motor_set_vel(4,0);         //Straight motor stopped
+    //motor_set_vel(5,0);
+	//pause(3);
+
+	while((vector_spinning() == ok) && (straight_ahead == false))
+	{
+		copy_objects();
+		check_flag_straight();
+	}
+
+    //printf("waiting to push some shit\n");
+
+	//motor_set_vel(5,0); 
+	//motor_set_vel(4,180);
+	//pause(1);
+
+    motor_set_vel(4,0);         //Straight motor stopped
+    motor_set_vel(5,0);         //Turning motor stopped   
+
+
+	//pause(5);
+	
+	while (1)
+	{
+	servo_set_pos(0,500);
+	servo_set_pos(1,200); 
+	pause(750);
+	servo_set_pos(0,225);
+	servo_set_pos(1,475);
+	pause(750);
+	}
+
 
 //    printf("Yep, everything has failed. Sucks.\n");
 }

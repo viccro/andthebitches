@@ -1,0 +1,188 @@
+UART0 opened at 19200
+Happyboard init started
+__malloc_heap_start = 0x8000
+__malloc_heap_end = 0xffff
+heap size: 32767 bytes
+Board config OK
+Hardware version 0.61
+Board ID 0000
+Happyboard v0.61
+Motor Battery: 8325mV
+Battery OK
+FPGA v0.7
+Board init complete.
+JoyOS v0.2.5
+thread table start at 0x323
+thread table end at 0x457
+(id 0) stack [0xfb7,0xe8b)
+(id 1) stack [0xe8b,0xd5f)
+(id 2) stack [0xd5f,0xc33)
+(id 3) stack [0xc33,0xb07)
+(id 4) stack [0xb07,0x9db)
+(id 5) stack [0x9db,0x8af)
+(id 6) stack [0x8af,0x783)
+Running usetup()...
+Finished usetup().
+Waiting for RF start, or press Go to start now.
+Running umain()...
+ON RED SIDE, BITCHES!!!!
+Start driving to waypoint
+next_point: red_wp, -1200, 1200
+current point.x: -1677 	 current point.y: 316 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 1004
+current point.x: -1677 	 current point.y: 316 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1677, current_point_y: 316
+next_point: red_wp, -1200, 1200
+current point.x: -1677 	 current point.y: 316 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 1004
+current point.x: -1677 	 current point.y: 316 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1677, current_point_y: 316
+next_point: red_wp, -1200, 1200
+current point.x: -1674 	 current point.y: 325 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 995
+current point.x: -1674 	 current point.y: 325 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1674, current_point_y: 325
+next_point: red_wp, -1200, 1200
+current point.x: -1616 	 current point.y: 359 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 938
+current point.x: -1616 	 current point.y: 359 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1616, current_point_y: 359
+next_point: red_wp, -1200, 1200
+current point.x: -1607 	 current point.y: 383 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 912
+current point.x: -1607 	 current point.y: 383 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1607, current_point_y: 383
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 418 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 873
+current point.x: -1589 	 current point.y: 418 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 418
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 453 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 842
+current point.x: -1589 	 current point.y: 453 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 453
+next_point: red_wp, -1200, 1200
+current point.x: -1586 	 current point.y: 486 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 811
+current point.x: -1586 	 current point.y: 486 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1586, current_point_y: 486
+next_point: red_wp, -1200, 1200
+current point.x: -1588 	 current point.y: 508 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 793
+current point.x: -1588 	 current point.y: 508 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1588, current_point_y: 508
+next_point: red_wp, -1200, 1200
+current point.x: -1588 	 current point.y: 532 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 772
+current point.x: -1588 	 current point.y: 532 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1588, current_point_y: 532
+next_point: red_wp, -1200, 1200
+current point.x: -1593 	 current point.y: 542 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 766
+current point.x: -1593 	 current point.y: 542 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1593, current_point_y: 542
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 763
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 543
+next_point: red_wp, -1200, 1200
+current point.x: -1591 	 current point.y: 538 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 768
+current point.x: -1591 	 current point.y: 538 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1591, current_point_y: 538
+next_point: red_wp, -1200, 1200
+current point.x: -1591 	 current point.y: 538 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 768
+current point.x: -1591 	 current point.y: 538 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1591, current_point_y: 538
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 763
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 543
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 763
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 543
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 763
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 543
+next_point: red_wp, -1200, 1200
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 763
+current point.x: -1589 	 current point.y: 543 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1589, current_point_y: 543
+next_point: red_wp, -1200, 1200
+current point.x: -1593 	 current point.y: 542 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 766
+current point.x: -1593 	 current point.y: 542 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1593, current_point_y: 542
+next_point: red_wp, -1200, 1200
+current point.x: -1588 	 current point.y: 545 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 761
+current point.x: -1588 	 current point.y: 545 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1588, current_point_y: 545
+next_point: red_wp, -1200, 1200
+current point.x: -1588 	 current point.y: 545 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 761
+current point.x: -1588 	 current point.y: 545 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1588, current_point_y: 545
+next_point: red_wp, -1200, 1200
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 762
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1595, current_point_y: 548
+next_point: red_wp, -1200, 1200
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 762
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1595, current_point_y: 548
+next_point: red_wp, -1200, 1200
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 762
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1595, current_point_y: 548
+next_point: red_wp, -1200, 1200
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 762
+current point.x: -1595 	 current point.y: 548 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1595, current_point_y: 548
+next_point: red_wp, -1200, 1200
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 759
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1597, current_point_y: 552
+next_point: red_wp, -1200, 1200
+current point.x: -1595 	 current point.y: 551 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 759
+current point.x: -1595 	 current point.y: 551 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1595, current_point_y: 551
+next_point: red_wp, -1200, 1200
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 759
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1597, current_point_y: 552
+next_point: red_wp, -1200, 1200
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 759
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1597, current_point_y: 552
+next_point: red_wp, -1200, 1200
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 759
+current point.x: -1597 	 current point.y: 552 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1597, current_point_y: 552
+next_point: red_wp, -1200, 1200
+current point.x: -1599 	 current point.y: 556 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 757
+current point.x: -1599 	 current point.y: 556 	 next point.x: -1200 	 next point.y: 1200 
+accomplished corner: 0		current_point_x: -1599, current_point_y: 556
+next_point: red_wp, -1200, 1200
+current point.x: -1594 	 current point.y: 559 	 next point.x: -1200 	 next point.y: 1200 
+dist to waypoint: 752
+current point.x: -1594 	 current point.y: 559 	 next point.x: -ñ

@@ -14,6 +14,5 @@ typedef struct {
 
 void delay(int);
 
-int dist_sqd(point,point);
-
+int dist(int,int,int,int);
 #endif

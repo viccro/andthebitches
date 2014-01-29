@@ -7,7 +7,8 @@ void delay(int n)
     { }
 }
 
-int dist(point a,point b)
+int dist(int x_curr, int y_curr, int x_new, int y_new)
 {
-    return (int) sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+	//printf("current point.x: %d \t current point.y: %d \t next point.x: %d \t next point.y: %d \n", x_curr, y_curr, x_new , y_new);
+    return (int) sqrt(pow((x_new - x_curr),2) + pow((y_new - y_curr),2));
 }
