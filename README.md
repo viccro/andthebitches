@@ -7,8 +7,8 @@ Our strategy for this 6.270 competition was very simple:
  * Raise and lower our servo-controlled arm repeatedly, in an attempt to dispense as many rings as possible
  * Disregard any rings that we have dispensed, and keep trying to push the lever to dispense more
 
-6.270 website: 
-Competition design:
-Our website: 
+6.270 website:      http://scripts.mit.edu/~6.270/
+Competition design: http://scripts.mit.edu/~6.270/contestants/lectures/2014/6.270%20Kickoff%202014.pdf
+Our website:        http://andthebitches.livejournal.com/
 
 
